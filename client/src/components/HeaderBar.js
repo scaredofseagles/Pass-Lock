@@ -30,7 +30,7 @@ export default function HeaderBar() {
                 </Nav>
 
 
-                <span>Welcome, {currentUser.email}</span>
+                <span style={{color: "whitesmoke"}}>Welcome, {currentUser.email}</span>
                 <Button variant="link" onClick={handleLogOut}>Log Out</Button>
             </Navbar>
             <div>

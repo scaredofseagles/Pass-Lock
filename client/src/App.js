@@ -6,6 +6,8 @@ import Dashboard from './views/Dashboard'
 import Login from './views/Login'
 import PrivateRoute from './PrivateRoute'
 import ForgotPassword from './views/ForgotPassword'
+import './style.css'
+import NewPage from './views/NewPage'
 
 function App() {
   return (
@@ -14,7 +16,8 @@ function App() {
           <AuthProvider>
             <Switch>
               <PrivateRoute exact path="/" component={Dashboard} />
-              <Container className="d-flex align-items-center justify-content-center" style={{minHeight: "100vh"}}>
+              <PrivateRoute exact path="/newpage" component={NewPage} />
+              <Container fluid className="d-flex align-items-center justify-content-center css-selector" style={{minHeight: "100vh"}}>
                 <div className="w-100" style={{maxWidth: "400px"}}>
                   <Route path="/signup" component={Signup}/>
                   <Route path="/login" component={Login}/>
