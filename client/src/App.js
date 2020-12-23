@@ -8,6 +8,8 @@ import PrivateRoute from './PrivateRoute'
 import ForgotPassword from './views/ForgotPassword'
 import './style.css'
 import NewPage from './views/NewPage'
+import AddAccount from './views/AddAccount'
+import Generate from "./views/Generate";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
             <Switch>
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute exact path="/newpage" component={NewPage} />
+              <PrivateRoute exact path="/add" component={AddAccount} />
+              <PrivateRoute exact path="/generate" component={Generate} />
               <Container fluid className="d-flex align-items-center justify-content-center css-selector" style={{minHeight: "100vh"}}>
                 <div className="w-100" style={{maxWidth: "400px"}}>
                   <Route path="/signup" component={Signup}/>
