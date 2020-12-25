@@ -1,97 +1,169 @@
-import React, {useState} from 'react'
-import HeaderBar from '../components/HeaderBar'
-import { Card, Container, Form, Button, Modal, } from 'react-bootstrap'
-import RangeSlider from 'react-bootstrap-range-slider'
+import React, { useState, useRef } from "react";
+import HeaderBar from "../components/HeaderBar";
+import {
+  Card,
+  Container,
+  Form,
+  Button,
+  Modal,
+  Alert,
+} from "react-bootstrap";
+import RangeSlider from "react-bootstrap-range-slider";
 
 export default function Generate() {
-    const [show, setShow] = useState(false);
-    const [ value, setValue ] = React.useState(50);
-    const [password, setPassword] = useState('')
-    const [parameters, setParameters] = useState({
-        uppercase: false,
-        lowercase: true,
-        numbers: false,
-        symbols: false
-    })
+  const [show, setShow] = useState(false);
+  const [range, setRange] = React.useState(10);
+  const [password, setPassword] = useState("");
 
-    function userInput(event){
-        let finalCharSet =''
-        const {name, checked} = event.target
+  const [uppercase, setUppercase] = useState(false);
+  const [lowercase, setLowercase] = useState(true);
+  const [numbers, setNumbers] = useState(false);
+  const [symbols, setSymbols] = useState(false);
 
+  const [error, setError] = useState("");
 
-        if (name === 'uppercase' && checked) finalCharSet += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        if (name === 'lowercase' && checked) finalCharSet += "abcdefghijklmnopqrstuvwxyz";
-        if (name === 'symbols' && checked) finalCharSet += "1234567890";
-        if (name === 'numbers' && checked) finalCharSet += "!@#$%?&*()";
+  function generatePass() {
+    const isLength = range;
+    let finalCharSet = "";
 
-        console.log('finalCharSet=', finalCharSet)
-        // if(checked){
-        //     //console.log(checked)
-        //     let checkedKey = Object.keys(parameters).filter((param)=> param === name)
-        //     console.log('checkedKey=', checkedKey)
-        //     setParameters(prevState => ({...prevState, checkedKey: checked}))
-        //     console.log(parameters)
-        // }
+    if (uppercase) finalCharSet += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if (lowercase) finalCharSet += "abcdefghijklmnopqrstuvwxyz";
+    if (symbols) finalCharSet += "1234567890";
+    if (numbers) finalCharSet += "!@#$%?&*";
 
+    console.log("finalCharSet=", finalCharSet);
+
+    let finalPass = "";
+
+    for (let i = 0; i < isLength; i++) {
+      let randomInt = Math.floor(Math.random() * finalCharSet.length + 1);
+      finalPass += finalCharSet[randomInt];
     }
 
+    console.log({ finalPass });
+    setPassword(finalPass);
+    displayPassword(finalPass);
+  }
 
-    // modal handling functions
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    
-    function handleFormSubmit(event){
-        event.preventDefault()
-
-        handleShow()
+  function displayPassword(finalPass) {
+    console.log({ password });
+    if (finalPass.length > 1) {
+      handleShow();
+    } else {
+      setError("Something went wrong");
     }
+  }
 
-    return (
-        <>
-            <HeaderBar/>
-            <Container>
-                <Example handleShow={handleShow} handleClose={handleClose} show={show}/>
-                <Card style={{paddingLeft: "40px", paddingRight:"40px"}}>
-                    <h2 className="text-center mt-3">Generate A Password</h2>
-                    <Form onSubmit={handleFormSubmit}>
-                        <Form.Group>
-                            <h4>Select all that apply</h4>
-                            <Form.Check onChange={userInput} inline label="Uppercase Letters" type="checkbox" name="uppercase" defaultChecked={parameters.uppercase}/>
-                            <Form.Check onChange={userInput} inline label="Lowercase Letters" type="checkbox" name="lowercase" defaultChecked={parameters.lowercase}/>
-                            <Form.Check onChange={userInput} inline label="Numbers" type="checkbox" name="numbers" defaultChecked={parameters.numbers}/>
-                            <Form.Check onChange={userInput} inline label="Symbols" type="checkbox" name="symbols" defaultChecked={parameters.symbols}/>
-                        </Form.Group>
-                        <Form.Group controlId="formBasicRange">
-                            <Form.Label>Password Length</Form.Label>
-                            <RangeSlider
-                                value={value}
-                                onChange={e => setValue(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Button className="w-50" variant="danger" type="submit">Generate</Button>
-                    </Form>
-                </Card>
-            </Container>
-        </>
-    )
+  // modal handling functions
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    generatePass();
+    //handleShow()
+  }
+
+  return (
+    <>
+      <HeaderBar />
+      <Container>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Example
+          handleShow={handleShow}
+          handleClose={handleClose}
+          show={show}
+          password={password}
+        />
+        <Card style={{ paddingLeft: "40px", paddingRight: "40px" }}>
+          <h2 className="text-center mt-3">Generate A Password</h2>
+          <Form onSubmit={handleFormSubmit}>
+            <Form.Group>
+              <h4>Select all that apply</h4>
+              <Form.Check
+                value={uppercase}
+                onChange={(e) => setUppercase(e.target.checked)}
+                inline
+                label="Uppercase Letters"
+                type="checkbox"
+                name="uppercase"
+              />
+              <Form.Check
+                value={lowercase}
+                onChange={(e) => setLowercase(e.target.checked)}
+                inline
+                label="Lowercase Letters"
+                type="checkbox"
+                name="lowercase"
+              />
+              <Form.Check
+                value={numbers}
+                onChange={(e) => setNumbers(e.target.checked)}
+                inline
+                label="Numbers"
+                type="checkbox"
+                name="numbers"
+              />
+              <Form.Check
+                value={symbols}
+                onChange={(e) => setSymbols(e.target.checked)}
+                inline
+                label="Symbols"
+                type="checkbox"
+                name="symbols"
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicRange">
+              <Form.Label>Password Length</Form.Label>
+              <RangeSlider
+                value={range}
+                onChange={(e) => setRange(e.target.value)}
+              />
+            </Form.Group>
+            <Button className="w-50" variant="danger" type="submit">
+              Generate
+            </Button>
+          </Form>
+        </Card>
+      </Container>
+    </>
+  );
 }
 
 function Example(props) {
-    
-  
-    return (
-      <>
-        <Modal show={props.show} onHide={props.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Your password is: {props.password} </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={props.handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    );
+  const passwordRef = useRef(null);
+  const [copyStatus, setCopyStatus] = useState("");
+
+  function copyToClipboard(event) {
+    try {
+      passwordRef.current.select();
+      document.execCommand("copy");
+      event.target.focus();
+      setCopyStatus("Copied!");
+    } catch (err) {
+      setCopyStatus("Something went wrong");
+    }
   }
+
+  return (
+    <>
+      <Modal show={props.show} onHide={props.handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Generated Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          Your password is: 
+            <input value={props.password} ref={passwordRef} />
+          <Button onClick={copyToClipboard}>Copy</Button>
+        </Modal.Body>
+        {copyStatus && <Alert className="text-center" variant={copyStatus === "Copied!" ? 'success' : 'danger'}  >{copyStatus}</Alert>}
+        <Modal.Footer>
+          <Button variant="secondary" onClick={ () => {props.handleClose(); setCopyStatus("")}}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
