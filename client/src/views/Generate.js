@@ -7,6 +7,9 @@ import {
   Button,
   Modal,
   Alert,
+  InputGroup,
+  FormControl,
+  FormLabel
 } from "react-bootstrap";
 import RangeSlider from "react-bootstrap-range-slider";
 
@@ -96,6 +99,7 @@ export default function Generate() {
                 label="Lowercase Letters"
                 type="checkbox"
                 name="lowercase"
+                defaultChecked
               />
               <Form.Check
                 value={numbers}
@@ -152,10 +156,20 @@ function Example(props) {
         <Modal.Header closeButton>
           <Modal.Title>Generated Password</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="text-center">
-          Your password is: 
-            <input value={props.password} ref={passwordRef} />
-          <Button onClick={copyToClipboard}>Copy</Button>
+        <Modal.Body > 
+            <FormLabel>Your password is: </FormLabel>
+            <InputGroup className="mb-3">
+                <FormControl
+                    value={props.password}
+                    ref={passwordRef}
+                    className="text-center"
+                />
+                <InputGroup.Append>
+                <Button variant="outline-secondary" onClick={copyToClipboard} ><i class="fas fa-clipboard"></i></Button>
+                </InputGroup.Append>
+            </InputGroup>
+
+
         </Modal.Body>
         {copyStatus && <Alert className="text-center" variant={copyStatus === "Copied!" ? 'success' : 'danger'}  >{copyStatus}</Alert>}
         <Modal.Footer>

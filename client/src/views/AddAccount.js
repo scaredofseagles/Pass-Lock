@@ -1,14 +1,19 @@
-import React, {useRef} from 'react'
-import { Card, Form, Button, Container } from 'react-bootstrap'
+import React, {useRef, useState} from 'react'
+import { Card, Form, Button, Container, Alert } from 'react-bootstrap'
 import HeaderBar from '../components/HeaderBar'
+import Hasher from '../utils/hasher'
 
 export default function AddAccount() {
     const websiteRef = useRef()
     const usernameRef = useRef()
     const passwordRef = useRef()
 
-    function handleFormSubmit(event){
+    const [error, setError] = useState('')
+
+    async function handleFormSubmit(event){
         event.preventDefault()
+        let hashed = await Hasher(passwordRef.current.value)
+        console.log(hashed)
     }
 
     return (
@@ -31,6 +36,7 @@ export default function AddAccount() {
                                 <Form.Label>Password </Form.Label>
                                 <Form.Control type="password" ref={passwordRef} required/>
                             </Form.Group>
+                            {error && <Alert>{error}</Alert>}
                             <Button type="submit" className="w-50 float-center">Add</Button>
                         </Form>
                     </Card.Body>
