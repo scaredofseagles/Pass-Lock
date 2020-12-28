@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 var config = {
   apiKey: `${process.env.APIKEY}`,
   authDomain: `${process.env.PROJECTID}.firebaseapp.com`,
@@ -9,3 +11,5 @@ firebase.initializeApp(config);
 
   // Get a reference to the database service
 var database = firebase.database();
+
+module.exports = database
