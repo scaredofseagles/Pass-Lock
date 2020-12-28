@@ -1,12 +1,14 @@
-var bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs')
+const API = require('./API')
 
-const Hasher = password => {
+const Hasher = (website, user_name, password) => {
     bcrypt.genSalt(10, function(err, salt){
         bcrypt.hash(password, salt, function(err, hash){
             if (err){
                 console.log('Oops!', err)
             } else{
                 console.log('Success!', hash)
+                API.sendData(website, user_name, hash)
             }
         })
 
@@ -15,5 +17,6 @@ const Hasher = password => {
         }
     })
 }
+
 
 module.exports = Hasher

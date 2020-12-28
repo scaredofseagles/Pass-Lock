@@ -1,6 +1,10 @@
 const database = require('../config/firebaseDb')
 
-function findAll(user_email, user_id){
+function findAll(){
+    database.ref()
+}
+
+function addOne(user_email, user_id){
     database.ref().set({
         id: user_id,
         email: user_email,
@@ -28,7 +32,7 @@ function removeOne(user_id){
     })
 }
 
-module.exports = { findAll, updateOne, removeOne }
+module.exports = { findAll, addOne, updateOne, removeOne }
 
 // Structure
 
