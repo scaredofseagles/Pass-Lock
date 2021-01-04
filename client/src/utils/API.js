@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const API = {
+export default {
     getAll: function(){
         return axios.get("/api/users")
     },
-    sendData: function(website, user_name, hashed_password){
+    sendData: function(hashed_password, website, user_name){
         return axios.post("/api/users", {website: website, username: user_name, password: hashed_password})
     },
     updateData: function(){},
@@ -12,5 +12,3 @@ const API = {
         return axios.delete("api/users" + user_id)
     }
 }
-
-module.exports = API

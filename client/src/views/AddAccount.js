@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react'
 import { Card, Form, Button, Container, Alert } from 'react-bootstrap'
 import HeaderBar from '../components/HeaderBar'
-import Hasher from '../utils/hasher'
+import Hash_Me from '../utils/hasher'
 import { useHistory } from 'react-router-dom'
 
 export default function AddAccount() {
@@ -15,7 +15,7 @@ export default function AddAccount() {
     async function handleFormSubmit(event){
         event.preventDefault()
         try {
-            await Hasher(passwordRef.current.value)
+            await Hash_Me(passwordRef.current.value)
             //history.push("/")
         } catch(err){
             setError('Something went wrong')

@@ -1,4 +1,4 @@
-const router = require('express').Router
+const router = require('express').Router()
 const usersController = require('../../controllers/usersController')
 
 router.route("/")
@@ -7,7 +7,7 @@ router.route("/")
 
 router
     .route("/:id")
-    .update(usersController.updateOne)
+    .put(usersController.updateOne)
     .delete(usersController.removeOne)
 
 module.exports = router

@@ -1,7 +1,8 @@
 const database = require('../config/firebaseDb')
 
 function findAll(){
-    database.ref()
+    var userId = firebase.auth().currentUser.uid;
+    return firebase.database().ref('/users/' + userId).once('value')
 }
 
 function addOne(user_email, user_id){
@@ -19,7 +20,7 @@ function addOne(user_email, user_id){
 }
 
 function updateOne(){
-    database.ref().update({})
+    //database.ref().update({})
 }
 
 function removeOne(user_id){
