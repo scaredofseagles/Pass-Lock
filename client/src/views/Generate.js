@@ -79,7 +79,7 @@ export default function Generate() {
           show={show}
           password={password}
         />
-        <Card style={{ paddingLeft: "40px", paddingRight: "40px" }}>
+        <Card style={{ paddingLeft: "40px", paddingRight: "40px", marginTop: '5%' }}>
           <h2 className="text-center mt-3">Generate A Password</h2>
           <Form onSubmit={handleFormSubmit}>
             <Form.Group>
@@ -125,7 +125,7 @@ export default function Generate() {
                 onChange={(e) => setRange(e.target.value)}
               />
             </Form.Group>
-            <Button className="w-50" variant="danger" type="submit">
+            <Button className="w-50 mb-4" variant="danger" type="submit">
               Generate
             </Button>
           </Form>

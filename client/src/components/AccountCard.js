@@ -1,4 +1,3 @@
-import React from "react";
 //import { Card } from 'react-bootstrap'
 
 export default function AccountCard(props) {
@@ -12,13 +11,13 @@ export default function AccountCard(props) {
           <div className="col-md-3">
             <div className="card-body">
               <h5 className="card-title">Account Name</h5>
-              <p className="card-text"><strong>Website: </strong></p>
+              <p className="card-text"><strong>Website: <input value={props.data.url} readOnly/></strong></p>
             </div>
           </div>
           <div className="col-md-3">
             <div className="card-body align-items-center">
-              <p className="card-text"><strong>Email: </strong></p>
-              <p className="card-text"><strong>Password: </strong></p>
+              <p className="card-text"><strong>Username: <input value={props.data.username} readOnly/> </strong></p>
+              <p className="card-text"><strong>Password: <input value={props.data.password} type="password" readOnly/></strong></p>
             </div>
           </div>
         </div>

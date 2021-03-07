@@ -1,14 +1,19 @@
 import axios from 'axios'
 
-export default {
+let API = {
     getAll: function(){
         return axios.get("/api/users")
     },
-    sendData: function(hashed_password, website, user_name){
-        return axios.post("/api/users", {website: website, username: user_name, password: hashed_password})
+    sendAcct: data =>{
+        return axios.post("/api/accounts", data)
+    },
+    getAccts: id =>{
+        return axios.get("api/accounts/" + id)
     },
     updateData: function(){},
     deleteData: function(user_id){
         return axios.delete("api/users" + user_id)
     }
-}
+};
+
+export default API;
