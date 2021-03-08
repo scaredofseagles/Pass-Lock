@@ -10,7 +10,11 @@
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "migrate": "knex migrate:latest",
+    "unmigrate": "knex migrate:down",
+    "unmigrate:all": "knex migrate:rollback",
+    "db": "/Applications/Postgres.app/Contents/Versions/13/bin/psql -p5432 \"passlock\" "
   },
   "repository": {
     "type": "git",
@@ -19,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^4.1.0",
+    "concurrently": "^6.0.0",
     "nodemon": "^1.18.7"
   },
   "bugs": {
@@ -31,6 +35,8 @@
     "express": "^4.17.1",
     "firebase": "^8.2.1",
     "if-env": "^1.0.4",
-    "path": "^0.12.7"
+    "knex": "^0.95.1",
+    "path": "^0.12.7",
+    "pg": "^8.5.1"
   }
 }

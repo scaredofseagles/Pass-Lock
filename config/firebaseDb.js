@@ -2,10 +2,10 @@ require('dotenv').config()
 const firebase = require('firebase')
 
 var config = {
-  apiKey: `${process.env.APIKEY}`,
-  authDomain: `${process.env.PROJECTID}.firebaseapp.com`,
-  databaseURL: `https://${process.env.DATABASE}.firebaseio.com`,
-  storageBucket: `${process.env.STORAGE}.appspot.com`
+  apiKey: process.env.APIKEY,
+  authDomain: process.env.AUTHDOMAIN,
+  databaseURL: process.env.DATABASE,
+  storageBucket: process.env.STORAGE
 };
 
 firebase.initializeApp(config);

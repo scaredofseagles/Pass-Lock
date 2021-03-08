@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import HeaderBar from "../components/HeaderBar";
 import {
   Card,
@@ -12,10 +12,11 @@ import {
   FormLabel
 } from "react-bootstrap";
 import RangeSlider from "react-bootstrap-range-slider";
+import { FaClipboard } from "react-icons/fa";
 
 export default function Generate() {
   const [show, setShow] = useState(false);
-  const [range, setRange] = React.useState(10);
+  const [range, setRange] = useState(10);
   const [password, setPassword] = useState("");
 
   const [uppercase, setUppercase] = useState(false);
@@ -79,7 +80,7 @@ export default function Generate() {
           show={show}
           password={password}
         />
-        <Card style={{ paddingLeft: "40px", paddingRight: "40px" }}>
+        <Card style={{ paddingLeft: "40px", paddingRight: "40px", marginTop: '5%' }}>
           <h2 className="text-center mt-3">Generate A Password</h2>
           <Form onSubmit={handleFormSubmit}>
             <Form.Group>
@@ -125,7 +126,7 @@ export default function Generate() {
                 onChange={(e) => setRange(e.target.value)}
               />
             </Form.Group>
-            <Button className="w-50" variant="danger" type="submit">
+            <Button className="w-50 mb-4" variant="danger" type="submit">
               Generate
             </Button>
           </Form>
@@ -165,7 +166,7 @@ function Example(props) {
                     className="text-center"
                 />
                 <InputGroup.Append>
-                <Button variant="outline-secondary" onClick={copyToClipboard} ><i class="fas fa-clipboard"></i></Button>
+                <Button variant="outline-secondary" onClick={copyToClipboard} ><FaClipboard /></Button>
                 </InputGroup.Append>
             </InputGroup>
 
