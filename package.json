@@ -10,7 +10,11 @@
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "migrate": "knex migrate:latest",
+    "unmigrate": "knex migrate:down",
+    "unmigrate:all": "knex migrate:rollback",
+    "db": "/Applications/Postgres.app/Contents/Versions/13/bin/psql -p5432 \"passlock\" "
   },
   "repository": {
     "type": "git",

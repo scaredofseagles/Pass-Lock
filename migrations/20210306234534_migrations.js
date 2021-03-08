@@ -11,7 +11,7 @@ exports.up = function(knex) {
             table.string('user_id').references('id').inTable('users')
             table.string('url', 140).notNullable()
             table.string('username', 50).notNullable()
-            table.binary('password', 60).notNullable()
+            table.string('password', 90).notNullable()
             table.timestamp('date').defaultTo(knex.fn.now())
         })
   ])

@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react'
 import { Card, Form, Button, Container, Alert } from 'react-bootstrap'
 import HeaderBar from '../components/HeaderBar'
-import hasher from '../utils/hasher'
+import { encrypt } from '../utils/crypto'
 import { useHistory } from 'react-router-dom'
 import API from '../utils/API';
 import { useAuth } from "../contexts/AuthContext"
@@ -15,9 +15,11 @@ export default function AddAccount() {
     const { currentUser } = useAuth()
 
     async function handleFormSubmit(event){
-        event.preventDefault()
+        event.preventDefault();
         try {
-            let hashedPass = await hasher(passwordRef.current.value)
+            let hashedPass = await encrypt(passwordRef.current.value);
+            debugger;
+
             if (hashedPass){
                 let newAcct = {
                     website: websiteRef.current.value,
@@ -49,7 +51,7 @@ export default function AddAccount() {
                         <Form onSubmit={handleFormSubmit}>
                             <Form.Group id="website">
                                 <Form.Label>Website </Form.Label>
-                                <Form.Control type="link" ref={websiteRef} required/>
+                                <Form.Control type="link" ref={websiteRef} placeholder="Paste the URL here" required/>
                             </Form.Group>
                             <Form.Group id="username">
                                 <Form.Label>Username or Email</Form.Label>

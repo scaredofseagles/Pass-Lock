@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import HeaderBar from "../components/HeaderBar";
 import {
   Card,
@@ -12,10 +12,11 @@ import {
   FormLabel
 } from "react-bootstrap";
 import RangeSlider from "react-bootstrap-range-slider";
+import { FaClipboard } from "react-icons/fa";
 
 export default function Generate() {
   const [show, setShow] = useState(false);
-  const [range, setRange] = React.useState(10);
+  const [range, setRange] = useState(10);
   const [password, setPassword] = useState("");
 
   const [uppercase, setUppercase] = useState(false);
@@ -165,7 +166,7 @@ function Example(props) {
                     className="text-center"
                 />
                 <InputGroup.Append>
-                <Button variant="outline-secondary" onClick={copyToClipboard} ><i class="fas fa-clipboard"></i></Button>
+                <Button variant="outline-secondary" onClick={copyToClipboard} ><FaClipboard /></Button>
                 </InputGroup.Append>
             </InputGroup>
 
