@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const pool = require('../../config/db')
+const getIcon = require('./getIcon')
 
 router.get("/:user_id", async (req, res) =>{
     const user_id = req.params.user_id;
@@ -16,12 +17,12 @@ router.post("/", async (req, res) =>{
 
     (async () => {
         const client = await pool.connect();
-
+        
         try {
-
+            const imageURL = await getIcon(website);
             await client.query(`
-                INSERT INTO accounts (user_id, url, username, password) 
-                VALUES('${user}', '${website}', '${username}', '${password}')
+                INSERT INTO accounts (user_id, url, username, password, image) 
+                VALUES('${user}', '${website}', '${username}', '${password}', '${imageURL}')
             `);
 
             res.json({success: true, message: 'Successfully Added Account'});
