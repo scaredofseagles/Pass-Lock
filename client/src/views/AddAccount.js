@@ -17,7 +17,6 @@ export default function AddAccount() {
         event.preventDefault();
         try {
             let hashedPass = await encrypt(passwordRef.current.value);
-            debugger;
 
             if (hashedPass){
                 let newAcct = {
@@ -31,6 +30,7 @@ export default function AddAccount() {
                 if (result.data.success){
                     window.location.replace("/")
                 }else(
+                    //FIXME: change to setMessage
                     setError(result.data.message)
                 )
             }

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Navbar, Nav, Button, Alert } from 'react-bootstrap'
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from 'react-router-dom'
+import { FcLock } from "react-icons/fc";
 
 export default function HeaderBar() {
     const [error, setError] = useState('')
@@ -22,7 +23,7 @@ export default function HeaderBar() {
     return (
         <>
             <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+                <Navbar.Brand href="/"><FcLock /></Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/add">Add</Nav.Link>

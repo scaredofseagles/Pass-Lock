@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import { Button, Alert, InputGroup, FormControl, Modal, Form } from "react-bootstrap";
-import { BsEyeSlashFill, BsEyeFill, BsThreeDotsVertical } from "react-icons/bs";
+import { BsEyeSlashFill, BsEyeFill } from "react-icons/bs";
 import { FaClipboard } from "react-icons/fa";
 import { decrypt } from "../utils/crypto";
 import { useAuth } from "../contexts/AuthContext";
+import UpdateAccount from "./UpdateAccount";
 
 export default function AccountCard(props) {
   const [show, setShow] = useState(false)
@@ -76,6 +77,8 @@ export default function AccountCard(props) {
               </p>
             </div>
           </div>
+          <UpdateAccount data={props.data}/>
+          
         </div>
 
         {copyStatus && <Alert show={alert} className="text-center" variant={copyStatus === "Copied!" ? 'success' : 'danger'} style={{margin: '1.5% 3%'}} transition dismissible onClose={() => setAlert(false)}>{copyStatus}</Alert>}
@@ -84,7 +87,7 @@ export default function AccountCard(props) {
   );
 }
 
-function ConfirmModal(props){
+export function ConfirmModal(props){
   const [message, setMessage] = useState('');
   const [close, setClosing] = useState(false);
 
