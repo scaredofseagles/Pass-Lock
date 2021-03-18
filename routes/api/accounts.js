@@ -35,4 +35,40 @@ router.post("/", async (req, res) =>{
     })().catch(e => console.error(e.stack));
 })
 
+router.put("/:id", async (req, res) => {
+    const acct_id = req.params.id;
+    const { user_id, url, username, password } = req.body;
+
+    (async () =>{
+        const client = await pool.connect();
+        try {
+            //TODO: code ...
+        } catch (error) {
+            res.json({success: false, message: "Failed to Edit Account Details"});
+            throw error;
+        } finally{
+            client.release();
+        }
+    })().catch(e=>console.error(e.stack))
+})
+
+router.delete("/:id", async (req, res) =>{
+    const acct_id = req.params.id;
+
+    (async () =>{
+        const client = await pool.connect();
+        try {
+            await client.query(`
+                DELETE FROM accounts WHERE id = '${acct_id}'
+            `)
+
+            res.json({success: true, message: "Successfully Removed Account"})
+        } catch (error) {
+            res.json({success: false, message: "Failed to Remove Account"});
+            throw error;
+        } finally {
+            client.release();
+        }
+    })().catch(e=>console.error(e.stack));
+})
 module.exports = router

@@ -38,7 +38,6 @@
     "knex": "^0.95.1",
     "path": "^0.12.7",
     "pg": "^8.5.1",
-    "puppeteer": "^8.0.0",
-    "styled-components": "^5.2.1"
+    "puppeteer": "^8.0.0"
   }
 }
