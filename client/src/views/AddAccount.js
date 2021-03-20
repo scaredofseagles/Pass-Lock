@@ -2,7 +2,6 @@ import React, {useRef, useState} from 'react'
 import { Card, Form, Button, Container, Alert } from 'react-bootstrap'
 import HeaderBar from '../components/HeaderBar'
 import { encrypt } from '../utils/crypto'
-import { useHistory } from 'react-router-dom'
 import API from '../utils/API';
 import { useAuth } from "../contexts/AuthContext"
 
@@ -18,7 +17,6 @@ export default function AddAccount() {
         event.preventDefault();
         try {
             let hashedPass = await encrypt(passwordRef.current.value);
-            debugger;
 
             if (hashedPass){
                 let newAcct = {
@@ -32,6 +30,7 @@ export default function AddAccount() {
                 if (result.data.success){
                     window.location.replace("/")
                 }else(
+                    //FIXME: change to setMessage
                     setError(result.data.message)
                 )
             }
@@ -45,9 +44,9 @@ export default function AddAccount() {
         <>
             <HeaderBar />
             <Container>
-                <Card>
+                <Card className="mt-5">
                     <Card.Body>
-                        <h2 className="mb-2">Add Account</h2>
+                        <h2 className="mb-4">Add Account</h2>
                         <Form onSubmit={handleFormSubmit}>
                             <Form.Group id="website">
                                 <Form.Label>Website </Form.Label>
@@ -62,7 +61,7 @@ export default function AddAccount() {
                                 <Form.Control type="password" ref={passwordRef} required/>
                             </Form.Group>
                             {error && <Alert variant="danger">{error}</Alert>}
-                            <Button type="submit" className="w-50 float-center">Add</Button>
+                            <Button type="submit" style={{float: 'right'}}>Add</Button>
                         </Form>
                     </Card.Body>
                 </Card>

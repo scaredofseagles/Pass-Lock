@@ -3,11 +3,14 @@ import { Button, Alert, InputGroup, FormControl, Modal, Form } from "react-boots
 import { BsEyeSlashFill, BsEyeFill } from "react-icons/bs";
 import { FaClipboard } from "react-icons/fa";
 import { decrypt } from "../utils/crypto";
+import { useAuth } from "../contexts/AuthContext";
+import UpdateAccount from "./UpdateAccount";
 
 export default function AccountCard(props) {
   const [show, setShow] = useState(false)
   const [copyStatus, setCopyStatus] = useState("");
   const [open, setOpen] = useState(false)
+  const [alert, setAlert] = useState(false)
 
   const websiteRef = useRef();
   const usernameRef = useRef();
@@ -19,6 +22,7 @@ export default function AccountCard(props) {
       document.execCommand("copy");
       //event.target.focus();
       setCopyStatus("Copied!");
+      setAlert(!alert)
     } catch (err) {
       setCopyStatus("Something went wrong");
     }
@@ -34,7 +38,7 @@ export default function AccountCard(props) {
       <div className="card mt-4 mb-3" style={{ minWidth: "30vw" }}>
         <div className="row g-0">
           <div className="col-md-4">
-            <img src="https://via.placeholder.com/200" alt="account" />
+            <img src={props.data.image || "https://via.placeholder.com/200"} alt="account" width="200" height="200"/>
           </div>
           <div className="col-md-3">
             <div className="card-body">
@@ -66,43 +70,64 @@ export default function AccountCard(props) {
                 <InputGroup>
                   <FormControl type={!show ? "password" : "text"} ref={passwordRef} value={decrypt(props.data.password)} readOnly/>
                   <InputGroup.Append>
-                    <Button variant="outline-secondary" onClick={() => setShow(!show)}> { !show ? <BsEyeFill /> : <BsEyeSlashFill />} </Button>
+                    <Button variant="outline-secondary" onClick={() => !show ? setOpen(!open) : setShow(!show)}> { !show ? <BsEyeFill /> : <BsEyeSlashFill />} </Button>
                     <Button variant="outline-secondary" onClick={() => copyToClipboard(passwordRef)}><FaClipboard /></Button>
                   </InputGroup.Append>
                 </InputGroup>
               </p>
             </div>
           </div>
+          <UpdateAccount data={props.data}/>
+          
         </div>
 
-        {copyStatus && <Alert className="text-center" variant={copyStatus === "Copied!" ? 'success' : 'danger'}  >{copyStatus}</Alert>}
+        {copyStatus && <Alert show={alert} className="text-center" variant={copyStatus === "Copied!" ? 'success' : 'danger'} style={{margin: '1.5% 3%'}} transition dismissible onClose={() => setAlert(false)}>{copyStatus}</Alert>}
       </div>
     </>
   );
 }
 
-function ConfirmModal(props){
+export function ConfirmModal(props){
+  const [message, setMessage] = useState('');
+  const [close, setClosing] = useState(false);
+
   const confirmPasswordRef = useRef();
+  const { confirmPassword, currentUser } = useAuth();
 
   async function handleFormSubmit(event){
     event.preventDefault();
 
-    //TODO:check if the password matches user password
-
+    try {
+      await confirmPassword(currentUser.email, confirmPasswordRef.current.value)
+      setMessage('Confirmed!')
+      setClosing(!close)
+      setTimeout(() => {
+        props.handleClose()
+        setMessage('')
+        setClosing(false);
+        props.allow();
+      }, 2000);
+    } catch (error) {
+      setMessage('Failed to Confirm Password')
+      console.error(error)
+    }
 
   }
 
   return(
-    <Modal show={props.open} onHide={props.handleClose}>
+    <Modal show={props.open} onHide={() => {props.handleClose(); setMessage('')}}>
       <Modal.Header closeButton>
         <Modal.Title>Confirm Identity</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Group>
           <Form.Label>Please confirm your password: </Form.Label>
-          <Form.Control type="password" ref={confirmPasswordRef}/>
+          <Form.Control type="password" ref={confirmPasswordRef} required/>
         </Form.Group>
-        <Button className="float-right">Submit</Button>
+
+        {message && <Alert className="text-center" variant={message === "Confirmed!" ? "success" : "danger"}>{message}</Alert>}
+
+        <Button onClick={handleFormSubmit} disabled={close} className="float-right">Submit</Button>
       </Modal.Body>
     </Modal>
   )
