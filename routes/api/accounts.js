@@ -37,14 +37,18 @@ router.post("/", async (req, res) =>{
 
 router.put("/:id", async (req, res) => {
     const acct_id = req.params.id;
-    const { user_id, url, username, password } = req.body;
+    const { url, email, password } = req.body;
 
     (async () =>{
         const client = await pool.connect();
         try {
-            //TODO: code ...
+            await client.query(`
+                UPDATE accounts SET url = '${url}', username = '${email}' ${password ? `, password = '${password}'`: ''}
+                WHERE id = '${acct_id}'
+            `);
+            res.json({success: true, message: "Successfully Updated Account"});
         } catch (error) {
-            res.json({success: false, message: "Failed to Edit Account Details"});
+            res.json({success: false, message: "Failed to Update Account Details"});
             throw error;
         } finally{
             client.release();

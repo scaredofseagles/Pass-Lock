@@ -1,7 +1,6 @@
 const CryptoJS = require("crypto-js");
 
 const encrypt = password =>{
-    console.log(process.env)
     let cipherText = CryptoJS.AES.encrypt(password, process.env.REACT_APP_SECRETKEY).toString();
 
     return cipherText
