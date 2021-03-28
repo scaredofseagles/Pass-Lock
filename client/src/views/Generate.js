@@ -11,8 +11,8 @@ import {
   FormControl,
   FormLabel
 } from "react-bootstrap";
-import RangeSlider from "react-bootstrap-range-slider";
 import { FaClipboard } from "react-icons/fa";
+import { Slider } from '@material-ui/core';
 
 export default function Generate() {
   const [show, setShow] = useState(false);
@@ -68,7 +68,9 @@ export default function Generate() {
     generatePass();
     //handleShow()
   }
-
+  const handleChange = (event, newValue) => {
+    setRange(newValue);
+  };
   return (
     <>
       <HeaderBar />
@@ -121,14 +123,16 @@ export default function Generate() {
             </Form.Group>
             <Form.Group controlId="formBasicRange">
               <Form.Label>Password Length</Form.Label>
-              <RangeSlider
+              <Slider 
                 value={range}
-                onChange={(e) => setRange(e.target.value)}
+                onChange={handleChange}
+                valueLabelDisplay="on"
+                max={40}
+                aria-labelledby="continuous-slider"
               />
             </Form.Group>
-            <Button className="w-50 mb-4" variant="danger" type="submit">
-              Generate
-            </Button>
+
+            <button className="rounded-lg bg-warmblue-500 hover:bg-warmblue-700 py-2.5 px-4 text-white mb-3 float-right">Generate</button>
           </Form>
         </Card>
       </Container>

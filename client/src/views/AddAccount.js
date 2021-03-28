@@ -61,7 +61,7 @@ export default function AddAccount() {
                                 <Form.Control type="password" ref={passwordRef} required/>
                             </Form.Group>
                             {error && <Alert variant="danger">{error}</Alert>}
-                            <Button type="submit" style={{float: 'right'}}>Add</Button>
+                            <button className="rounded-lg bg-warmblue-500 hover:bg-warmblue-700 py-2.5 px-4 text-white float-right">Add</button>
                         </Form>
                     </Card.Body>
                 </Card>
