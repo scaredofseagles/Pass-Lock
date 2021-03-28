@@ -6,7 +6,6 @@ import Dashboard from './views/Dashboard'
 import Login from './views/Login'
 import PrivateRoute from './PrivateRoute'
 import ForgotPassword from './views/ForgotPassword'
-import './style.css'
 import NewPage from './views/NewPage'
 import AddAccount from './views/AddAccount'
 import Generate from "./views/Generate";
