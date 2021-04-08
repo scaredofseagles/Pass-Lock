@@ -1,7 +1,10 @@
-# Redirects and headers are GLOBAL for all builds – they do not get scoped to
-# contexts no matter where you define them in the file.
-# For context-specific rules, use _headers or _redirects files, which are
-# PER-DEPLOY.
+# Settings in the [build] context are global and are applied to all contexts
+# unless otherwise overridden by more specific contexts.
+[build]
+  # Directory to change to before starting a build.
+  # This is where we will look for package.json/.nvmrc/etc.
+  # If not set, defaults to the root directory.
+  base = "client/"
 
 # A redirect rule with many of the supported properties
 [[redirects]]
@@ -9,16 +12,6 @@
   to = "http://api.passlock.ca:3001/"
   status = 302
   force = true
-  conditions = {Language = ["en"], Country = ["CA"]}
-
-  # Sign each request with a value defined in an environment variable
-  #signed = "API_SIGNATURE_TOKEN"
-
-  # You can also define custom headers within your redirects blocks.
-  #[redirects.headers]
-   # X-From = "Netlify"
-   # X-Api-Key = "some-api-key-string"
-
 
 # The following redirect is intended for use with most SPAs that handle
 # routing internally.
@@ -30,3 +23,19 @@
 [[headers]]
   # Define which paths this specific [[headers]] block will cover.
   for = "/*"
+
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Content-Security-Policy = "frame-ancestors https://www.facebook.com"
+
+    # Multi-value headers are expressed with multi-line strings.
+	cache-control = '''
+	max-age=0,
+	no-cache,
+	no-store,
+	must-revalidate'''
+
+    # Basic-Auth allows you to password protect your whole site.
+    # This feature may not be available on all plans.
+    #Basic-Auth = "someuser:somepassword anotheruser:anotherpassword"
