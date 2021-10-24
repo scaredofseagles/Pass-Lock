@@ -1,8 +1,9 @@
 exports.up = function(knex) {
   return Promise.all([
+    knex.schema.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"'),
     knex.schema.createTable("users", table => {
       table
-        .bigIncrements("id")
+        .uuid("id")
         .primary()
         .unsigned()
         .notNullable();
@@ -19,7 +20,7 @@ exports.up = function(knex) {
         .unsigned()
         .notNullable();
       table
-        .integer("user_id")
+        .uuid("user_id")
         .references("id")
         .inTable("users")
         .onUpdate("CASCADE")

@@ -32,13 +32,17 @@
   "homepage": "https://github.com/scaredofseagles/Pass-Lock#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase": "^8.2.1",
     "if-env": "^1.0.4",
     "knex": "^0.95.1",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "path": "^0.12.7",
     "pg": "^8.5.1",
-    "puppeteer": "^8.0.0"
+    "puppeteer": "^8.0.0",
+    "uuid": "^8.3.2"
   }
 }

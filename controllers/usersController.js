@@ -1,5 +1,6 @@
 const db = require("../config/db");
 const { hashPassword, authenticatePass } = require("../utils/auth");
+const { v4: uuidv4 } = require("uuid");
 
 exports.getUser = async (req, res) => {
   const { email } = req.params;
@@ -9,7 +10,7 @@ exports.getUser = async (req, res) => {
       `SELECT * FROM users WHERE email = '${email}'`
     );
 
-    res.json({ success: true, response: userQuery.rows });
+    res.json({ success: true, response: userQuery.rows[0] });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }
@@ -35,7 +36,7 @@ exports.authorizeUser = async (req, res) => {
       if (isMatch) res.json({ success: true, response: userQuery.rows[0] });
     }
 
-    throw new Error({ message: "Email or Password is Incorrect" });
+    throw new Error("Email or Password is Incorrect");
   } catch (error) {
     res.json({ success: false, message: error.message });
   }
@@ -46,15 +47,17 @@ exports.addUser = async (req, res) => {
 
   let hashedPass = await hashPassword(password);
 
+  const uuid = uuidv4();
+
   try {
     let userQuery = await db.query(
-      `INSERT INTO users (first_name, last_name, email, password) VALUES ('${firstName}', '${lastName}', '${email}', '${hashedPass}') RETURNING *`
+      `INSERT INTO users (id, first_name, last_name, email, password) VALUES ('${uuid}', '${firstName}', '${lastName}', '${email}', '${hashedPass}') RETURNING *`
     );
 
     res.json({
       success: true,
       message: "Successfully Created User.",
-      response: userQuery.rows
+      response: userQuery.rows[0]
     });
   } catch (err) {
     res.json({ success: false, message: err.message });

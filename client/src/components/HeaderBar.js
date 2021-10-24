@@ -9,12 +9,12 @@ export default function HeaderBar() {
   const [error, setError] = useState("");
   const history = useHistory();
   const { logOut } = useAuth();
-  const { currentUser } = useStore();
+  const currentUser = useStore(state => state.currentUser);
 
   async function handleLogOut() {
     setError("");
     try {
-      await logOut();
+      await logOut(currentUser.id);
       history.push("/login");
     } catch {
       setError("Failed to Logout");

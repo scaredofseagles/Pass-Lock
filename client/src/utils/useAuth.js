@@ -3,6 +3,7 @@ import useStore from "./store";
 
 const useAuth = () => {
   const { setCurrentUser } = useStore();
+  // const currentUser = useStore(state => state.currentUser);
 
   const signUp = async ({ firstName, lastName, email, password }) => {
     const result = await API.addUser({
@@ -14,6 +15,7 @@ const useAuth = () => {
 
     if (result.data.success) {
       setCurrentUser(result.data.response);
+      await API.addSession({ userid: result.data.response.id });
     }
 
     return result;
@@ -24,12 +26,16 @@ const useAuth = () => {
 
     if (result.data.success) {
       setCurrentUser(result.data.response);
+      await API.addSession({ userid: result.data.response.id });
     }
 
     return result;
   };
 
-  const logOut = () => setCurrentUser({});
+  const logOut = async id => {
+    await API.removeSession(id);
+    setCurrentUser({});
+  };
 
   const resetPassword = email => {
     //
