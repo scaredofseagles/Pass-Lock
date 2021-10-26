@@ -1,21 +1,14 @@
+import { useLayoutEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import useStore from "./store";
+import Login from "../views/Login";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const currentUser = useStore(state => state.currentUser);
+const PrivateRoute = ({ component, ...rest }) => {
+  const { currentUser } = useStore();
 
-  return (
-    <Route
-      {...rest}
-      render={props => {
-        return currentUser ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        );
-      }}
-    ></Route>
-  );
+  const finalComponent = currentUser ? component : Login;
+
+  return <Route {...rest} component={finalComponent} />;
 };
 
 export default PrivateRoute;

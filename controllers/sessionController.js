@@ -27,7 +27,6 @@ exports.getCurrentSession = async (req, res) => {
 
   const sessionToken = token;
 
-  console.log({ sessionToken });
   try {
     if (!sessionToken) throw new Error("No Sessions for this User.");
 

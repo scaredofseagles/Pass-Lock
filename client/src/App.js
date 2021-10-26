@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import { useState, useLayoutEffect, useReducer } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import Signup from "./views/Signup";
 import { Container } from "react-bootstrap";
-import { AuthProvider } from "./contexts/AuthContext";
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,17 +17,16 @@ import Dashboard from "./views/Dashboard";
 import Login from "./views/Login";
 import ForgotPassword from "./views/ForgotPassword";
 import NewPage from "./views/NewPage";
-import AddAccount from "./views/AddAccount";
-import Generate from "./views/Generate";
 import Landing from "./views/Landing";
+import HeaderBar from "./components/HeaderBar";
 
 function App() {
   const currentUser = useStore(state => state.currentUser);
   const { setCurrentUser } = useStore();
 
-  const history = useHistory();
+  const [data, setData] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!currentUser) checkSession();
   }, []);
 
@@ -36,17 +34,23 @@ function App() {
     let result = await API.getCurrentSession();
     if (result.data.success) {
       setCurrentUser(result.data.response);
-      history.push("/");
     }
   };
 
   return (
     <ChakraProvider>
       <Switch>
-        <PrivateRoute exact path="/" component={Dashboard} />
-        <PrivateRoute exact path="/newpage" component={NewPage} />
-        <PrivateRoute exact path="/add" component={AddAccount} />
-        <PrivateRoute exact path="/generate" component={Generate} />
+        <div>
+          <HeaderBar updateData={() => setData(!data)} />
+          <PrivateRoute
+            exact
+            path="/"
+            component={Dashboard}
+            accountData={data}
+          />
+          <PrivateRoute exact path="/newpage" component={NewPage} />
+        </div>
+
         <Route path="/home" component={Landing} />
         <Container
           fluid

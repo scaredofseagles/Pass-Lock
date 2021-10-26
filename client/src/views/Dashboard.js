@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
-import HeaderBar from "../components/HeaderBar";
 import { Container } from "react-bootstrap";
+import { Heading, Center } from "@chakra-ui/react";
 import AccountCard from "../components/AccountCard";
 import API from "../utils/API";
 import useStore from "../utils/store";
 
-export default function Dashboard() {
+export default function Dashboard({ accountData }) {
   const [accounts, setAccounts] = useState([]);
   const { currentUser } = useStore();
 
   useEffect(() => {
-    console.log(currentUser);
     getAccounts();
-  }, []);
+  }, [accountData]);
 
   async function getAccounts() {
     let result = await API.getAccts(currentUser.id);
@@ -20,14 +19,13 @@ export default function Dashboard() {
   }
 
   return (
-    <>
-      <HeaderBar />
-      <Container>
-        <h1 className="text-center mt-3">Dashboard</h1>
-        {accounts.map(item => {
-          return <AccountCard data={item} />;
-        })}
-      </Container>
-    </>
+    <Container>
+      <Center>
+        <Heading mt="1em">Dashboard</Heading>
+      </Center>
+      {accounts.map(item => {
+        return <AccountCard data={item} />;
+      })}
+    </Container>
   );
 }
