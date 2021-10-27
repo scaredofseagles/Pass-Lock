@@ -17,7 +17,7 @@ import { MdAutorenew } from "react-icons/md";
 
 import useStore from "../utils/store";
 
-export default function HeaderBar({ updateData }) {
+export default function HeaderBar({ update }) {
   const [error, setError] = useState("");
   const [openAcct, setOpenAcct] = useState(false);
   const [openGenerate, setOpenGenerate] = useState(false);
@@ -36,24 +36,15 @@ export default function HeaderBar({ updateData }) {
     }
   }
 
-  const handleNewAccount = () => {
-    //
-  };
-
-  const handleGeneratePass = () => {
-    //
-  };
-
   return (
     <>
       <Box pt={5} pb={0} bg="gray.800">
         <ul style={{ display: "flex", listStyleType: "none" }}>
           <IconButton
             as={Link}
-            // style={{ marginLeft: "1em" }}
             variant="link"
             size="lg"
-            to="/"
+            to="/home"
             icon={<FcLock />}
           />
           <div style={{ marginLeft: "auto", marginRight: ".5em" }}>
@@ -84,7 +75,7 @@ export default function HeaderBar({ updateData }) {
                 Welcome, {currentUser?.first_name}
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
+                {/*  <MenuItem>Profile</MenuItem> */}
                 <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
               </MenuList>
             </Menu>
@@ -95,7 +86,7 @@ export default function HeaderBar({ updateData }) {
       <AddAccount
         open={openAcct}
         onClose={() => setOpenAcct(false)}
-        updateData={updateData}
+        updateData={update}
       />
       <Generate open={openGenerate} onClose={() => setOpenGenerate(false)} />
     </>

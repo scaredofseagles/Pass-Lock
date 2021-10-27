@@ -34,6 +34,7 @@ export default function AddAccount({ open, onClose, updateData }) {
   const [formErrors, setFormErrors] = useState({});
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
+  const [close, setClosing] = useState(false);
   const { currentUser } = useStore();
 
   const handleChange = e => {
@@ -78,7 +79,12 @@ export default function AddAccount({ open, onClose, updateData }) {
         if (result.data.success) {
           // TODO: disable, spinner, update
           updateData();
-          onClose();
+          setClosing(true);
+          setTimeout(() => {
+            setClosing(false);
+            onClose();
+            setError("");
+          }, 1500);
         } else setError(result.data.message);
       } else setError("Something went wrong. Please Try Again");
     }
@@ -173,6 +179,7 @@ export default function AddAccount({ open, onClose, updateData }) {
             bg="yellow.400"
             color="white"
             _hover={{ bg: "yellow.500" }}
+            isDisabled={close}
           >
             Add
           </Button>

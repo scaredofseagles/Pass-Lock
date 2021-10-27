@@ -45,8 +45,6 @@ export default function Generate({ open, onClose }) {
     if (symbols) finalCharSet += "1234567890";
     if (numbers) finalCharSet += "!@#$%?&*";
 
-    console.log("finalCharSet=", finalCharSet);
-
     let finalPass = "";
 
     for (let i = 0; i < isLength; i++) {
@@ -54,7 +52,6 @@ export default function Generate({ open, onClose }) {
       finalPass += finalCharSet[randomInt];
     }
 
-    console.log({ finalPass });
     setPassword(finalPass);
     displayPassword(finalPass);
   };
