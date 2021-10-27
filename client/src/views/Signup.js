@@ -88,7 +88,10 @@ export default function Signup() {
   };
 
   return (
-    <>
+    <div
+      className="d-flex align-items-center justify-content-center css-selector"
+      style={{ minHeight: "100vh" }}
+    >
       <Center>
         <Stack>
           <Box
@@ -112,7 +115,6 @@ export default function Signup() {
                   First Name
                 </Text>
                 <Input
-                  w="60%"
                   placeholder="Enter Here"
                   id="firstName"
                   name="firstName"
@@ -132,7 +134,6 @@ export default function Signup() {
                   Last Name
                 </Text>
                 <Input
-                  w="60%"
                   placeholder="Enter Here"
                   id="lastName"
                   name="lastName"
@@ -148,7 +149,7 @@ export default function Signup() {
               ) : null}
 
               <InputGroup>
-                <Text htmlFor="email" mr="1em">
+                <Text htmlFor="email" mr="2em">
                   Email
                 </Text>
                 <Input
@@ -247,7 +248,7 @@ export default function Signup() {
             </Button>
           </Box>
           <Center>
-            <Text color="gray.500">
+            <Text color="gray.600">
               Already have an account?{" "}
               <ReachLink as={Link} to="/login" color="yellow.400">
                 Login
@@ -256,6 +257,6 @@ export default function Signup() {
           </Center>
         </Stack>
       </Center>
-    </>
+    </div>
   );
 }

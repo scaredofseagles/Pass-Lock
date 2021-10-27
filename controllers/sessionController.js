@@ -6,8 +6,6 @@ exports.checkSession = async (req, res) => {
   const { userid } = req.params;
   const { token } = req.cookies;
 
-  console.log({ userid, token });
-
   try {
     let sessionQuery = await db.query(
       `SELECT * FROM sessions WHERE user_id = '${userid}' AND token = '${token}'`
@@ -27,7 +25,6 @@ exports.getCurrentSession = async (req, res) => {
 
   const sessionToken = token;
 
-  console.log({ sessionToken });
   try {
     if (!sessionToken) throw new Error("No Sessions for this User.");
 

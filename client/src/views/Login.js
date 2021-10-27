@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import useAuth from "../utils/useAuth";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -61,13 +61,16 @@ export default function Login() {
       let result = await login(formValues);
 
       if (result.data.success) {
-        history.push("/");
+        history.push("/home");
       } else setError(result.data.message);
     } else setError("Failed to log in");
   };
 
   return (
-    <>
+    <div
+      className="d-flex align-items-center justify-content-center css-selector"
+      style={{ minHeight: "100vh" }}
+    >
       <Center>
         <Stack>
           <Box
@@ -154,14 +157,14 @@ export default function Login() {
               Submit
             </Button>
           </Box>
-          <Center>
-            <ReachLink as={Link} to="/forgetpassword" color="yellow.400">
+          {/*<Center>
+            <ReachLink as={Link} to="/forgotpassword" color="yellow.400">
               Forget Password?
             </ReachLink>
-          </Center>
+          </Center>*/}
 
           <Center>
-            <Text color="gray.500">
+            <Text color="gray.600">
               Don't have an account?{" "}
               <ReachLink as={Link} to="/signup" color="yellow.400">
                 Sign Up
@@ -170,6 +173,6 @@ export default function Login() {
           </Center>
         </Stack>
       </Center>
-    </>
+    </div>
   );
 }

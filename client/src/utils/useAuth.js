@@ -41,7 +41,11 @@ const useAuth = () => {
     //
   };
 
-  return { signUp, login, logOut, resetPassword };
+  const confirmPassword = async (email, password) => {
+    return await API.authorize({ email, password });
+  };
+
+  return { signUp, login, logOut, resetPassword, confirmPassword };
 };
 
 export default useAuth;
