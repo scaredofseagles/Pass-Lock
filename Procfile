@@ -1,1 +1,1 @@
-web: ./startup.sh
+worker: ./startup.sh
