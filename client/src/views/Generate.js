@@ -1,20 +1,30 @@
 import { useState, useRef } from "react";
-import HeaderBar from "../components/HeaderBar";
 import {
-  Card,
-  Container,
-  Form,
-  Button,
   Modal,
-  Alert,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
   InputGroup,
-  FormControl,
-  FormLabel
-} from "react-bootstrap";
+  InputLeftElement,
+  IconButton,
+  Text,
+  Input,
+  Button,
+  Alert,
+  AlertIcon,
+  Stack,
+  Checkbox,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb
+} from "@chakra-ui/react";
 import { FaClipboard } from "react-icons/fa";
-import { Slider } from '@material-ui/core';
 
-export default function Generate() {
+export default function Generate({ open, onClose }) {
   const [show, setShow] = useState(false);
   const [range, setRange] = useState(10);
   const [password, setPassword] = useState("");
@@ -26,7 +36,7 @@ export default function Generate() {
 
   const [error, setError] = useState("");
 
-  function generatePass() {
+  const generatePass = () => {
     const isLength = range;
     let finalCharSet = "";
 
@@ -35,116 +45,141 @@ export default function Generate() {
     if (symbols) finalCharSet += "1234567890";
     if (numbers) finalCharSet += "!@#$%?&*";
 
-    console.log("finalCharSet=", finalCharSet);
-
     let finalPass = "";
 
     for (let i = 0; i < isLength; i++) {
-      let randomInt = Math.floor(Math.random() * finalCharSet.length + 1);
+      let randomInt = Math.floor(Math.random() * finalCharSet.length);
       finalPass += finalCharSet[randomInt];
     }
 
-    console.log({ finalPass });
     setPassword(finalPass);
     displayPassword(finalPass);
-  }
+  };
 
-  function displayPassword(finalPass) {
+  const displayPassword = finalPass => {
     console.log({ password });
     if (finalPass.length > 1) {
       handleShow();
     } else {
       setError("Something went wrong");
     }
-  }
+  };
 
   // modal handling functions
-  const handleClose = () => setShow(false);
+  const handleClose = item => {
+    if (item) {
+      setShow(false);
+      onClose();
+    }
+
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
-  function handleFormSubmit(event) {
+  const handleFormSubmit = event => {
     event.preventDefault();
 
     generatePass();
-    //handleShow()
-  }
-  const handleChange = (event, newValue) => {
+  };
+
+  const handleChange = newValue => {
+    console.log(newValue);
     setRange(newValue);
   };
   return (
     <>
-      <HeaderBar />
-      <Container>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <Example
-          handleShow={handleShow}
-          handleClose={handleClose}
-          show={show}
-          password={password}
-        />
-        <Card style={{ paddingLeft: "40px", paddingRight: "40px", marginTop: '5%' }}>
-          <h2 className="text-center mt-3">Generate A Password</h2>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Group>
-              <h4>Select all that apply</h4>
-              <Form.Check
+      <Modal isOpen={open} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Generate A Password</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text fontSize="xl">Select all that apply</Text>
+            <Stack mt="1em" ml="1.5em" mb="1.5em">
+              <Checkbox
                 value={uppercase}
-                onChange={(e) => setUppercase(e.target.checked)}
-                inline
-                label="Uppercase Letters"
-                type="checkbox"
+                onChange={e => setUppercase(e.target.checked)}
+                colorScheme="yellow"
+                aria-label="Uppercase Letters"
                 name="uppercase"
-              />
-              <Form.Check
+              >
+                Uppercase Letters
+              </Checkbox>
+              <Checkbox
                 value={lowercase}
-                onChange={(e) => setLowercase(e.target.checked)}
-                inline
-                label="Lowercase Letters"
-                type="checkbox"
+                onChange={e => setLowercase(e.target.checked)}
+                colorScheme="yellow"
+                aria-label="Lowercase Letters"
                 name="lowercase"
-                defaultChecked
-              />
-              <Form.Check
+                defaultIsChecked
+              >
+                Lowercase Letters
+              </Checkbox>
+              <Checkbox
                 value={numbers}
-                onChange={(e) => setNumbers(e.target.checked)}
-                inline
-                label="Numbers"
-                type="checkbox"
+                onChange={e => setNumbers(e.target.checked)}
+                colorScheme="yellow"
+                aria-label="Numbers"
                 name="numbers"
-              />
-              <Form.Check
+              >
+                Numbers
+              </Checkbox>
+              <Checkbox
                 value={symbols}
-                onChange={(e) => setSymbols(e.target.checked)}
-                inline
-                label="Symbols"
-                type="checkbox"
+                onChange={e => setSymbols(e.target.checked)}
+                colorScheme="yellow"
+                aria-label="Symbols"
                 name="symbols"
-              />
-            </Form.Group>
-            <Form.Group controlId="formBasicRange">
-              <Form.Label>Password Length</Form.Label>
-              <Slider 
-                value={range}
-                onChange={handleChange}
-                valueLabelDisplay="on"
-                max={40}
-                aria-labelledby="continuous-slider"
-              />
-            </Form.Group>
+              >
+                Symbols
+              </Checkbox>
+            </Stack>
+            <Text fontSize="xl" mb="1em">
+              Password Length
+            </Text>
+            <Slider
+              aria-label="password-length-slider"
+              value={range}
+              onChange={handleChange}
+              max={40}
+            >
+              <SliderTrack bg="gray.200">
+                <SliderFilledTrack bg="yellow.400" />
+              </SliderTrack>
 
-            <button className="rounded-lg bg-warmblue-500 hover:bg-warmblue-700 py-2.5 px-4 text-white mb-3 float-right">Generate</button>
-          </Form>
-        </Card>
-      </Container>
+              <SliderThumb bg="yellow.500" />
+            </Slider>
+
+            <Text color="gray.600">Length: {range}</Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              onClick={handleFormSubmit}
+              bg="yellow.400"
+              color="white"
+              _hover={{ bg: "yellow.500" }}
+            >
+              Generate
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Example
+        handleShow={handleShow}
+        handleClose={handleClose}
+        show={show}
+        password={password}
+      />
     </>
   );
 }
 
-function Example(props) {
+const Example = props => {
   const passwordRef = useRef(null);
   const [copyStatus, setCopyStatus] = useState("");
 
-  function copyToClipboard(event) {
+  const copyToClipboard = event => {
     try {
       passwordRef.current.select();
       document.execCommand("copy");
@@ -153,36 +188,74 @@ function Example(props) {
     } catch (err) {
       setCopyStatus("Something went wrong");
     }
-  }
+  };
 
   return (
     <>
-      <Modal show={props.show} onHide={props.handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Generated Password</Modal.Title>
-        </Modal.Header>
-        <Modal.Body > 
-            <FormLabel>Your password is: </FormLabel>
+      <Modal
+        isOpen={props.show}
+        onClose={() => {
+          props.handleClose();
+          setCopyStatus("");
+        }}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Generated Password</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Your password is: </Text>
             <InputGroup className="mb-3">
-                <FormControl
-                    value={props.password}
-                    ref={passwordRef}
-                    className="text-center"
+              <Input
+                value={props.password}
+                ref={passwordRef}
+                className="text-center"
+                variant="filled"
+                isReadOnly
+              />
+              <InputLeftElement>
+                <IconButton
+                  onClick={copyToClipboard}
+                  variant="solid"
+                  icon={<FaClipboard />}
                 />
-                <InputGroup.Append>
-                <Button variant="outline-secondary" onClick={copyToClipboard} ><FaClipboard /></Button>
-                </InputGroup.Append>
+              </InputLeftElement>
             </InputGroup>
-
-
-        </Modal.Body>
-        {copyStatus && <Alert className="text-center" variant={copyStatus === "Copied!" ? 'success' : 'danger'}  >{copyStatus}</Alert>}
-        <Modal.Footer>
-          <Button variant="secondary" onClick={ () => {props.handleClose(); setCopyStatus("")}}>
-            Close
-          </Button>
-        </Modal.Footer>
+          </ModalBody>
+          {copyStatus && (
+            <Alert
+              status={copyStatus === "Copied!" ? "success" : "error"}
+              w="90%"
+              style={{ margin: "0 1.5em" }}
+            >
+              <AlertIcon />
+              {copyStatus}
+            </Alert>
+          )}
+          <ModalFooter>
+            <Button
+              mr="1em"
+              bg="yellow.400"
+              color="white"
+              _hover={{ bg: "yellow.500" }}
+              onClick={() => {
+                props.handleClose();
+                setCopyStatus("");
+              }}
+            >
+              Generate Again
+            </Button>
+            <Button
+              onClick={() => {
+                props.handleClose(true);
+                setCopyStatus("");
+              }}
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </>
   );
-}
+};
