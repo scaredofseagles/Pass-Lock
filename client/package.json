@@ -21,17 +21,17 @@
     "framer-motion": "^4.1.17",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
-    "react-dom": "^17.0.1",
+    "react-dom": "^16.13.0",
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
+    "react-scripts": "3.4.0",
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4",
     "zustand": "^3.5.13"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node --max_old_space_size=2048 node_modules/.bin/react-scripts start",
+    "build": "node --max_old_space_size=2048 node_modules/.bin/react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
