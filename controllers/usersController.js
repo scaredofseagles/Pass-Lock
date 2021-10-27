@@ -1,48 +1,73 @@
-const database = require('../config/firebaseDb')
+const db = require("../config/db");
+const { hashPassword, authenticatePass } = require("../utils/auth");
+const { v4: uuidv4 } = require("uuid");
 
-function findAll(){
-    var userId = firebase.auth().currentUser.uid;
-    return firebase.database().ref('/users/' + userId).once('value')
-}
+exports.getUser = async (req, res) => {
+  const { email } = req.params;
 
-function addOne(user_email, user_id){
-    database.ref().set({
-        id: user_id,
-        email: user_email,
-        accounts: []
-    }, (error) => {
-        if (error) {
-            console.log('Error!', error)
-        } else {
-            console.log('Success! Item has been saved')
-        }
-    })
-}
+  try {
+    let userQuery = await db.query(
+      `SELECT * FROM users WHERE email = '${email}'`
+    );
 
-function updateOne(){
-    //database.ref().update({})
-}
+    res.json({ success: true, response: userQuery.rows[0] });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+};
 
-function removeOne(user_id){
-    database.ref('/users/' + user_id).remove({}, error =>{
-        if (error) {
-            console.log('Error!', error)
-        } else {
-            console.log('Success! Item has been removed')
-        }
-    })
-}
+exports.authorizeUser = async (req, res) => {
+  const { email, password } = req.body;
 
-module.exports = { findAll, addOne, updateOne, removeOne }
+  try {
+    // check if the user exists
 
-// Structure
+    let userQuery = await db.query(
+      `SELECT * FROM users WHERE email = '${email}'`
+    );
 
-// {
-//   users: {
-//     "test@test.com": [
-//       { "website": "www.netflix.com", "user_email": "test@test.com", "password": "test123!"},
-//       { ... }
-//     ]
-//   }
-// }
-  
+    // check if password provided matches the db password
+
+    if (userQuery.rows.length) {
+      let isMatch = await authenticatePass(
+        userQuery.rows[0].password,
+        password
+      );
+      if (isMatch) res.json({ success: true, response: userQuery.rows[0] });
+    }
+
+    throw new Error("Email or Password is Incorrect");
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+exports.addUser = async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  let hashedPass = await hashPassword(password);
+
+  const uuid = uuidv4();
+
+  try {
+    let userQuery = await db.query(
+      `INSERT INTO users (id, first_name, last_name, email, password) VALUES ('${uuid}', '${firstName}', '${lastName}', '${email}', '${hashedPass}') RETURNING *`
+    );
+
+    res.json({
+      success: true,
+      message: "Successfully Created User.",
+      response: userQuery.rows[0]
+    });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+};
+
+exports.editUser = async (req, res) => {
+  const { id } = req.params;
+};
+
+exports.removeUser = async (req, res) => {
+  //
+};
