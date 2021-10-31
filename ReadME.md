@@ -2,12 +2,11 @@
 
 ## Description
 
-A Password Manager made with React, Firebase, Node, and PostgreSQL.
+A Password Manager made with React, Node, and PostgreSQL.
 
 ## Technologies
 
 - React
-- Firebase
 - Node & Express
 - PostgreSQL
 
