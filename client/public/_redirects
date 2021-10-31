@@ -1,2 +1,2 @@
-/api/*  http://155.138.141.84:3001/api/  200
+https://passlock.ca/api/*  http://155.138.141.84:3001/  301
 /* /index.html 200
