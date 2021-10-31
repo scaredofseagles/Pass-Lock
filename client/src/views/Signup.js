@@ -82,7 +82,7 @@ export default function Signup() {
       let result = await signUp(formValues);
 
       if (result.data.success) {
-        history.push("/");
+        history.push("/home");
       } else setError(result.data.message);
     } else setError("Failed to Create User.");
   };
