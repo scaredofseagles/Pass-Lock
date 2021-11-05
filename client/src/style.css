@@ -1,5 +1,25 @@
+a {
+  text-decoration: none;
+  color: inherit !important;
+}
+
+.footer {
+  color: #ecc94b !important;
+}
+
+li {
+  list-style-type: none;
+}
+
 .css-selector {
-  background: linear-gradient(180deg, #484848, #823737, #c5283d, #e9724c, #fca223);
+  background: linear-gradient(
+    180deg,
+    #484848,
+    #823737,
+    #c5283d,
+    #e9724c,
+    #fca223
+  );
   background-size: 800% 800%;
 
   -webkit-animation: fade 19s ease infinite;

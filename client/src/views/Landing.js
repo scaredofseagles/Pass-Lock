@@ -9,6 +9,13 @@ import {
   Button
 } from "@chakra-ui/react";
 import { Link as ReachLink } from "react-router-dom";
+import {
+  lockIcon,
+  account1,
+  account2,
+  addAccount,
+  generateAccount
+} from "../assets";
 
 export default function Landing() {
   return (
@@ -38,7 +45,7 @@ export default function Landing() {
           >
             <Image
               objectFit="cover"
-              src="./android-chrome-192x192.png"
+              src={lockIcon}
               boxSize="192px"
               alt="icon"
             />
@@ -51,6 +58,8 @@ export default function Landing() {
                 mt="3em"
                 bg="gray.300"
                 _hover={{ bg: "#fca223", color: "white" }}
+                as={ReachLink}
+                to="/signup"
               >
                 Try Now
               </Button>
@@ -58,14 +67,55 @@ export default function Landing() {
           </div>
         </Box>
       </Box>
-      <Box bg="gray.300" w="100vw" h="90vh">
+      <Box bg="gray.300" w="100vw">
         <Center>
           <Heading color="gray.700" pt="1em" size="2xl">
             All your Accounts in One Place
           </Heading>
         </Center>
-        <p>show little boxes of website previews</p>
-        <p>and maybe a few testimonials</p>
+
+        <Box p="10%">
+          <Image src={account1} />
+
+          <Image src={account2} my="2em" />
+
+          <Stack>
+            <Center>
+              <Heading color="gray.700" p="1em">
+                Store Passwords
+              </Heading>
+
+              <Image src={addAccount} my="2em" w="400px" objectFit="contain" />
+            </Center>
+          </Stack>
+
+          <Stack>
+            <Center>
+              <Heading color="gray.700" p="1em">
+                Generate Strong Passwords
+              </Heading>
+
+              <Image src={generateAccount} w="400px" objectFit="contain" />
+            </Center>
+          </Stack>
+        </Box>
+        <Box bg="gray.700" mb="auto" py="2em" color="gray.300">
+          <ul style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <li>
+              Copyright ©{" "}
+              <a
+                className="footer"
+                href="https://daileykaze.ca"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Dailey Kaze
+              </a>{" "}
+              | All Rights Reserved
+            </li>
+            <li>Made with 💛 in Toronto</li>
+          </ul>
+        </Box>
       </Box>
     </>
   );
