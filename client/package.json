@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "/",
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@chakra-ui/react": "^1.6.10",
     "@emotion/react": "^11.5.0",
@@ -19,6 +20,7 @@
     "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
     "framer-motion": "^4.1.17",
+    "query-string": "^4.3.4",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
