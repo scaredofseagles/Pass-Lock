@@ -10,6 +10,7 @@ import {
 import useAuth from "../utils/useAuth";
 import AddAccount from "../views/AddAccount";
 import Generate from "../views/Generate";
+import SearchBar from "../Search/SearchBar";
 import { useHistory, Link } from "react-router-dom";
 import { FcLock } from "react-icons/fc";
 import { FiPlus } from "react-icons/fi";
@@ -47,6 +48,10 @@ export default function HeaderBar({ update }) {
             to="/home"
             icon={<FcLock />}
           />
+
+          <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+            <SearchBar />
+          </div>
           <div style={{ marginLeft: "auto", marginRight: ".5em" }}>
             <IconButton
               aria-label="Add Account"
@@ -67,16 +72,22 @@ export default function HeaderBar({ update }) {
               _hover={{ backgroundColor: "gray.700" }}
               icon={<MdAutorenew />}
             />
-            <Menu style={{ float: "right" }}>
+            <Menu style={{ float: "right" }} bg="gray.700">
               <MenuButton
                 style={{ color: "whitesmoke", padding: ".6em" }}
                 _hover={{ backgroundColor: "gray.700" }}
               >
                 Welcome, {currentUser?.first_name}
               </MenuButton>
-              <MenuList>
+              <MenuList bg="gray.800" color="whitesmoke">
                 {/*  <MenuItem>Profile</MenuItem> */}
-                <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+                <MenuItem
+                  onClick={handleLogOut}
+                  _hover={{ backgroundColor: "gray.700" }}
+                  _focus={{ backgroundColor: "gray.700" }}
+                >
+                  Log Out
+                </MenuItem>
               </MenuList>
             </Menu>
           </div>

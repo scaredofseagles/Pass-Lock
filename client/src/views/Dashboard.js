@@ -5,36 +5,23 @@ import HeaderBar from "../components/HeaderBar";
 import AccountCard from "../components/AccountCard";
 import API from "../utils/API";
 import useStore from "../utils/store";
+import useAccount from "../utils/useAccount";
 
 export default function Dashboard() {
-  const [accounts, setAccounts] = useState([]);
-  const [updateData, setUpdateData] = useState(false);
-  const { currentUser } = useStore();
-
-  useEffect(() => {
-    getAccounts();
-  }, [updateData]);
-
-  async function getAccounts() {
-    let result = await API.getAccts(currentUser.id);
-    setAccounts(result.data.response);
-  }
+  const { accounts, updateAccount } = useAccount();
 
   // TODO: when they are no accounts, add a "click here to get started" button
 
   return (
     <>
-      <HeaderBar update={() => setUpdateData(!updateData)} />
+      <HeaderBar update={updateAccount} />
       <Container>
         <Center>
           <Heading mt="1em">Dashboard</Heading>
         </Center>
         {accounts.map(item => {
           return (
-            <AccountCard
-              data={item}
-              update={() => setUpdateData(!updateData)}
-            />
+            <AccountCard key={item.id} data={item} update={updateAccount} />
           );
         })}
       </Container>
