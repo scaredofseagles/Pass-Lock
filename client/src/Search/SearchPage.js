@@ -12,10 +12,9 @@ const SearchPage = () => {
   useEffect(() => {
     const parsed = queryString.parse(window.location.search);
     searchAccounts(parsed.q);
-  }, [window.location.search, accounts]);
+  }, [window.location.search, accounts]); //eslint-disable-line react-hooks/exhaustive-deps
 
   const searchAccounts = value => {
-    console.log(value, accounts);
     setSearchAcct(
       accounts.filter(
         item => item.url.includes(value) || item.username.includes(value)
@@ -26,24 +25,25 @@ const SearchPage = () => {
   return (
     <>
       <HeaderBar update={updateAccount} />
-      <Box p="10%">
+      <Box px="10%" style={{ maxHeight: "90vh", overflowY: "auto" }}>
         <Center>
-          <Heading>Search Results</Heading>
+          <Heading mt="1em">Search Results</Heading>
         </Center>
-
-        {searchAcct.length ? (
-          searchAcct.map(item => {
-            return (
-              <AccountCard key={item.id} data={item} update={updateAccount} />
-            );
-          })
-        ) : (
-          <Center mt="20%">
-            <Heading fontSize="2xl" color="gray.600">
-              No Accounts Match Your Search 😔
-            </Heading>
-          </Center>
-        )}
+        <div>
+          {searchAcct.length ? (
+            searchAcct.map(item => {
+              return (
+                <AccountCard key={item.id} data={item} update={updateAccount} />
+              );
+            })
+          ) : (
+            <Center mt="20%">
+              <Heading fontSize="2xl" color="gray.600">
+                No Accounts Match Your Search 😔
+              </Heading>
+            </Center>
+          )}
+        </div>
       </Box>
     </>
   );

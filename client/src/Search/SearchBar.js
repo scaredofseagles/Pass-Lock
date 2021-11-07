@@ -19,6 +19,17 @@ const SearchBar = () => {
       setValue(queryString.parse(window.location.search).q);
   }, []);
 
+  useEffect(() => {
+    const handleEnter = e => {
+      if ([...e.target.classList].includes("search") && e.key === "Enter")
+        handleSubmit();
+    };
+
+    window.addEventListener("keydown", handleEnter);
+
+    return () => window.removeEventListener("keydown", handleEnter);
+  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handleInputChange = e => {
     setValue(e.target.value);
   };
@@ -29,9 +40,10 @@ const SearchBar = () => {
   };
 
   return (
-    <Box>
+    <Box width="100%">
       <InputGroup>
         <Input
+          className="search"
           borderColor="gray.600"
           color="whitesmoke"
           placeholder="Search Accounts"

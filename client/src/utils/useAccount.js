@@ -9,7 +9,7 @@ const useAccount = () => {
 
   useEffect(() => {
     if (currentUser) getAccounts();
-  }, [currentUser, update]); //eslint-disable-line react-hooks/exhaustive-deps
+  }, [update]); //eslint-disable-line react-hooks/exhaustive-deps
 
   async function getAccounts() {
     let result = await API.getAccts(currentUser.id);

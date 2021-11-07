@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
-import { Heading, Center } from "@chakra-ui/react";
+import { Box, Heading, Center } from "@chakra-ui/react";
 import HeaderBar from "../components/HeaderBar";
 import AccountCard from "../components/AccountCard";
 import API from "../utils/API";
@@ -15,7 +13,7 @@ export default function Dashboard() {
   return (
     <>
       <HeaderBar update={updateAccount} />
-      <Container>
+      <Box px="10%" style={{ maxHeight: "90vh", overflowY: "auto" }}>
         <Center>
           <Heading mt="1em">Dashboard</Heading>
         </Center>
@@ -24,7 +22,7 @@ export default function Dashboard() {
             <AccountCard key={item.id} data={item} update={updateAccount} />
           );
         })}
-      </Container>
+      </Box>
     </>
   );
 }
