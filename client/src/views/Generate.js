@@ -151,6 +151,13 @@ export default function Generate({ open, onClose }) {
             </Slider>
 
             <Text color="gray.600">Length: {range}</Text>
+
+            {error && (
+              <Alert status="error">
+                <AlertIcon />
+                {error}
+              </Alert>
+            )}
           </ModalBody>
 
           <ModalFooter>
