@@ -10,10 +10,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
-
-  useEffect(() => {
     if (!currentUser) {
       checkSession();
     } else setLoading(false);
@@ -27,6 +23,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
     setLoading(false);
   };
+
+  // TODO: add spinner for loading
 
   return loading ? (
     <p>Loading</p>

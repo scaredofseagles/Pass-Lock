@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { Box, Heading, Center } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
 import HeaderBar from "../components/HeaderBar";
-import AccountCard from "../components/AccountCard";
+import AccountCard from "../Accounts/AccountCard";
 import queryString from "query-string";
-import useAccount from "../utils/useAccount";
+import { useAccount } from "../Accounts/useAccount";
 
 const SearchPage = () => {
-  const { accounts, updateAccount } = useAccount();
+  const { accounts, getAccounts } = useAccount();
   const [searchAcct, setSearchAcct] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     const parsed = queryString.parse(window.location.search);
@@ -24,7 +26,6 @@ const SearchPage = () => {
 
   return (
     <>
-      <HeaderBar update={updateAccount} />
       <Box px="10%" style={{ maxHeight: "90vh", overflowY: "auto" }}>
         <Center>
           <Heading mt="1em">Search Results</Heading>
@@ -33,7 +34,7 @@ const SearchPage = () => {
           {searchAcct.length ? (
             searchAcct.map(item => {
               return (
-                <AccountCard key={item.id} data={item} update={updateAccount} />
+                <AccountCard key={item.id} data={item} update={getAccounts} />
               );
             })
           ) : (

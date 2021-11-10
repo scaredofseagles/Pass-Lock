@@ -8,7 +8,8 @@ import {
   MenuItem
 } from "@chakra-ui/react";
 import useAuth from "../utils/useAuth";
-import AddAccount from "../views/AddAccount";
+import { useAccount } from "../Accounts/useAccount";
+import AddAccount from "../Accounts/AddAccount";
 import Generate from "../views/Generate";
 import SearchBar from "../Search/SearchBar";
 import { useHistory, Link } from "react-router-dom";
@@ -18,10 +19,11 @@ import { MdAutorenew } from "react-icons/md";
 
 import useStore from "../utils/store";
 
-export default function HeaderBar({ update }) {
+export default function HeaderBar() {
   const [error, setError] = useState("");
   const [openAcct, setOpenAcct] = useState(false);
   const [openGenerate, setOpenGenerate] = useState(false);
+  const { getAccounts } = useAccount();
 
   const history = useHistory();
   const { logOut } = useAuth();
@@ -97,7 +99,7 @@ export default function HeaderBar({ update }) {
       <AddAccount
         open={openAcct}
         onClose={() => setOpenAcct(false)}
-        updateData={update}
+        updateData={getAccounts}
       />
       <Generate open={openGenerate} onClose={() => setOpenGenerate(false)} />
     </>
