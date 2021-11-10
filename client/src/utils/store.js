@@ -2,7 +2,9 @@ import create from "zustand";
 
 const useStore = create(set => ({
   currentUser: null,
-  setCurrentUser: currentUser => set({ currentUser })
+  openAcct: false,
+  setCurrentUser: currentUser => set({ currentUser }),
+  setOpenAcct: openAcct => set({ openAcct })
 }));
 
 export default useStore;
