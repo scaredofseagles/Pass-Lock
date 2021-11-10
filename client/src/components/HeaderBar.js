@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   IconButton,
@@ -22,15 +22,15 @@ import useStore from "../utils/store";
 
 export default function HeaderBar() {
   const [error, setError] = useState("");
-  const [openAcct, setOpenAcct] = useState(false);
   const [openGenerate, setOpenGenerate] = useState(false);
   const { getAccounts } = useAccount();
 
   const history = useHistory();
   const { logOut } = useAuth();
   const currentUser = useStore(state => state.currentUser);
+  const { openAcct, setOpenAcct } = useStore();
 
-  async function handleLogOut() {
+  const handleLogOut = async () => {
     setError("");
     try {
       await logOut(currentUser.id);
@@ -38,7 +38,7 @@ export default function HeaderBar() {
     } catch {
       setError("Failed to Logout");
     }
-  }
+  };
 
   return (
     <>

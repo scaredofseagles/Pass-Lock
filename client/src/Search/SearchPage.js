@@ -22,28 +22,26 @@ const SearchPage = () => {
   };
 
   return (
-    <>
-      <Box px="10%" style={{ maxHeight: "90vh", overflowY: "auto" }}>
-        <Center>
-          <Heading mt="1em">Search Results</Heading>
-        </Center>
-        <div>
-          {searchAcct.length ? (
-            searchAcct.map(item => {
-              return (
-                <AccountCard key={item.id} data={item} update={getAccounts} />
-              );
-            })
-          ) : (
-            <Center mt="20%">
-              <Heading fontSize="2xl" color="gray.600">
-                No Accounts Match Your Search 😔
-              </Heading>
-            </Center>
-          )}
-        </div>
-      </Box>
-    </>
+    <Box px="10%" style={{ maxHeight: "90vh", overflowY: "auto" }}>
+      <Center>
+        <Heading mt="1em">Search Results</Heading>
+      </Center>
+      <div>
+        {searchAcct.length ? (
+          searchAcct.map(item => {
+            return (
+              <AccountCard key={item.id} data={item} update={getAccounts} />
+            );
+          })
+        ) : (
+          <Center mt="20%">
+            <Heading fontSize="2xl" color="gray.600">
+              No Accounts Match Your Search 😔
+            </Heading>
+          </Center>
+        )}
+      </div>
+    </Box>
   );
 };
 
