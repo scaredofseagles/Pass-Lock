@@ -49,6 +49,8 @@ export default function AddAccount({ open, onClose, updateData }) {
   let validateFields = values => {
     let errors = {};
 
+    // TODO: do i need to check URL format???
+
     if (!formValues.website) errors.website = "Must enter a URL";
     if (!formValues.username)
       errors.username = "Must enter a username or email";
@@ -75,13 +77,13 @@ export default function AddAccount({ open, onClose, updateData }) {
 
         let result = await API.sendAcct(newAcct);
         if (result.data.success) {
-          setClosing(true);
+          // TODO: disable, spinner, update
           updateData();
+          setClosing(true);
           setTimeout(() => {
             setClosing(false);
             onClose();
             setError("");
-            setFormValues(initialValues);
           }, 1500);
         } else setError(result.data.message);
       } else setError("Something went wrong. Please Try Again");

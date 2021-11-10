@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Box, Heading, Center } from "@chakra-ui/react";
-import AccountCard from "../Accounts/AccountCard";
+import HeaderBar from "../components/HeaderBar";
+import AccountCard from "../components/AccountCard";
 import queryString from "query-string";
-import { useAccount } from "../Accounts/useAccount";
+import useAccount from "../utils/useAccount";
 
 const SearchPage = () => {
-  const { accounts, getAccounts } = useAccount();
+  const { accounts, updateAccount } = useAccount();
   const [searchAcct, setSearchAcct] = useState([]);
 
   useEffect(() => {
@@ -22,26 +23,29 @@ const SearchPage = () => {
   };
 
   return (
-    <Box px="10%" style={{ maxHeight: "90vh", overflowY: "auto" }}>
-      <Center>
-        <Heading mt="1em">Search Results</Heading>
-      </Center>
-      <div>
-        {searchAcct.length ? (
-          searchAcct.map(item => {
-            return (
-              <AccountCard key={item.id} data={item} update={getAccounts} />
-            );
-          })
-        ) : (
-          <Center mt="20%">
-            <Heading fontSize="2xl" color="gray.600">
-              No Accounts Match Your Search 😔
-            </Heading>
-          </Center>
-        )}
-      </div>
-    </Box>
+    <>
+      <HeaderBar update={updateAccount} />
+      <Box px="10%" style={{ maxHeight: "90vh", overflowY: "auto" }}>
+        <Center>
+          <Heading mt="1em">Search Results</Heading>
+        </Center>
+        <div>
+          {searchAcct.length ? (
+            searchAcct.map(item => {
+              return (
+                <AccountCard key={item.id} data={item} update={updateAccount} />
+              );
+            })
+          ) : (
+            <Center mt="20%">
+              <Heading fontSize="2xl" color="gray.600">
+                No Accounts Match Your Search 😔
+              </Heading>
+            </Center>
+          )}
+        </div>
+      </Box>
+    </>
   );
 };
 

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { Spinner } from "@chakra-ui/react";
 import useStore from "./store";
 import API from "./API";
-import HeaderBar from "../components/HeaderBar";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const currentUser = useStore(state => state.currentUser);
@@ -12,10 +10,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
+
+  useEffect(() => {
     if (!currentUser) {
       checkSession();
     } else setLoading(false);
-  }, []); //eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const checkSession = async () => {
     let result = await API.getCurrentSession();
@@ -27,16 +29,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   };
 
   return loading ? (
-    <Spinner color="yellow.400" />
+    <p>Loading</p>
   ) : (
     <Route
       {...rest}
       render={props => {
         return currentUser ? (
-          <>
-            <HeaderBar />
-            <Component {...props} />
-          </>
+          <Component {...props} />
         ) : (
           <Redirect to="/login" />
         );

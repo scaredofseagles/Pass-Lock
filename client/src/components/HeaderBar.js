@@ -1,16 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   IconButton,
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
-  Tooltip
+  MenuItem
 } from "@chakra-ui/react";
 import useAuth from "../utils/useAuth";
-import { useAccount } from "../Accounts/useAccount";
-import AddAccount from "../Accounts/AddAccount";
+import AddAccount from "../views/AddAccount";
 import Generate from "../views/Generate";
 import SearchBar from "../Search/SearchBar";
 import { useHistory, Link } from "react-router-dom";
@@ -20,17 +18,16 @@ import { MdAutorenew } from "react-icons/md";
 
 import useStore from "../utils/store";
 
-export default function HeaderBar() {
+export default function HeaderBar({ update }) {
   const [error, setError] = useState("");
+  const [openAcct, setOpenAcct] = useState(false);
   const [openGenerate, setOpenGenerate] = useState(false);
-  const { getAccounts } = useAccount();
 
   const history = useHistory();
   const { logOut } = useAuth();
   const currentUser = useStore(state => state.currentUser);
-  const { openAcct, setOpenAcct } = useStore();
 
-  const handleLogOut = async () => {
+  async function handleLogOut() {
     setError("");
     try {
       await logOut(currentUser.id);
@@ -38,54 +35,43 @@ export default function HeaderBar() {
     } catch {
       setError("Failed to Logout");
     }
-  };
+  }
 
   return (
     <>
       <Box pt={5} pb={0} bg="gray.800">
         <ul style={{ display: "flex", listStyleType: "none" }}>
-          <Tooltip hasArrow label="Home" bg="gray.700" color="white">
-            <IconButton
-              as={Link}
-              variant="link"
-              size="lg"
-              to="/home"
-              icon={<FcLock />}
-            />
-          </Tooltip>
+          <IconButton
+            as={Link}
+            variant="link"
+            size="lg"
+            to="/home"
+            icon={<FcLock />}
+          />
 
           <div style={{ marginLeft: "auto", marginRight: "auto" }}>
             <SearchBar />
           </div>
           <div style={{ marginLeft: "auto", marginRight: ".5em" }}>
-            <Tooltip hasArrow label="Add Account" bg="gray.700" color="white">
-              <IconButton
-                aria-label="Add Account"
-                onClick={() => setOpenAcct(true)}
-                variant="ghost"
-                isRound={true}
-                color="whitesmoke"
-                _hover={{ backgroundColor: "gray.700" }}
-                icon={<FiPlus />}
-              />
-            </Tooltip>
-            <Tooltip
-              hasArrow
-              label="Generate Password"
-              bg="gray.700"
-              color="white"
-            >
-              <IconButton
-                aria-label="Generate"
-                onClick={() => setOpenGenerate(true)}
-                mr=".7em"
-                variant="ghost"
-                isRound={true}
-                color="whitesmoke"
-                _hover={{ backgroundColor: "gray.700" }}
-                icon={<MdAutorenew />}
-              />
-            </Tooltip>
+            <IconButton
+              aria-label="Add Account"
+              onClick={() => setOpenAcct(true)}
+              variant="ghost"
+              isRound={true}
+              color="whitesmoke"
+              _hover={{ backgroundColor: "gray.700" }}
+              icon={<FiPlus />}
+            />
+            <IconButton
+              aria-label="Generate"
+              onClick={() => setOpenGenerate(true)}
+              mr=".7em"
+              variant="ghost"
+              isRound={true}
+              color="whitesmoke"
+              _hover={{ backgroundColor: "gray.700" }}
+              icon={<MdAutorenew />}
+            />
             <Menu style={{ float: "right" }} bg="gray.700">
               <MenuButton
                 style={{ color: "whitesmoke", padding: ".6em" }}
@@ -111,7 +97,7 @@ export default function HeaderBar() {
       <AddAccount
         open={openAcct}
         onClose={() => setOpenAcct(false)}
-        updateData={getAccounts}
+        updateData={update}
       />
       <Generate open={openGenerate} onClose={() => setOpenGenerate(false)} />
     </>

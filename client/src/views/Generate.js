@@ -57,6 +57,7 @@ export default function Generate({ open, onClose }) {
   };
 
   const displayPassword = finalPass => {
+    console.log({ password });
     if (finalPass.length > 1) {
       handleShow();
     } else {
@@ -73,7 +74,6 @@ export default function Generate({ open, onClose }) {
 
     setShow(false);
   };
-
   const handleShow = () => setShow(true);
 
   const handleFormSubmit = event => {
