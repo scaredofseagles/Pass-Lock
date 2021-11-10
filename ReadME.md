@@ -14,7 +14,7 @@ A Password Manager made with React, Node, and PostgreSQL.
 
 To get a feel of the website login [here](https://passlock.ca) with test account credentials:
 
-- Username: test
+- Username: test@test.com
 - Password: TestAcc
 
 From there you should be able to save and modify accounts and generate passwords. The test account will be checked regularly for correct data.
