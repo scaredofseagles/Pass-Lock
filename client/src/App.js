@@ -1,12 +1,12 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import Signup from "./views/Signup";
+import Signup from "./Auth/Signup";
 import { Switch, Route, Redirect } from "react-router-dom";
 import AcctProvider from "./Accounts/useAccount";
 
 import PrivateRoute from "./utils/PrivateRoute";
 import Dashboard from "./views/Dashboard";
-import Login from "./views/Login";
-import ForgotPassword from "./views/ForgotPassword";
+import Login from "./Auth/Login";
+import ForgotPassword from "./Auth/ForgotPassword";
 import Landing from "./views/Landing";
 import SearchPage from "./Search/SearchPage";
 

@@ -75,12 +75,13 @@ export default function AddAccount({ open, onClose, updateData }) {
 
         let result = await API.sendAcct(newAcct);
         if (result.data.success) {
-          updateData();
           setClosing(true);
+          updateData();
           setTimeout(() => {
             setClosing(false);
             onClose();
             setError("");
+            setFormValues(initialValues);
           }, 1500);
         } else setError(result.data.message);
       } else setError("Something went wrong. Please Try Again");
