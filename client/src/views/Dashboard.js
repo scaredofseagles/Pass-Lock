@@ -1,8 +1,5 @@
-import { Box, Heading, Center } from "@chakra-ui/react";
-import HeaderBar from "../components/HeaderBar";
+import { Box, Heading, Center, Button, Stack } from "@chakra-ui/react";
 import AccountCard from "../Accounts/AccountCard";
-import API from "../utils/API";
-import useStore from "../utils/store";
 import { useAccount } from "../Accounts/useAccount";
 
 export default function Dashboard() {
@@ -16,15 +13,42 @@ export default function Dashboard() {
         <Center>
           <Heading mt="1em">Dashboard</Heading>
         </Center>
-        {accounts.map(item => {
-          return (
-            <AccountCard
-              key={item.id}
-              data={item}
-              update={() => getAccounts()}
-            />
-          );
-        })}
+        {accounts.length ? (
+          accounts.map(item => {
+            return (
+              <AccountCard
+                key={item.id}
+                data={item}
+                update={() => getAccounts()}
+              />
+            );
+          })
+        ) : (
+          <Box
+            borderWidth="2px"
+            borderColor="gray.200"
+            my="10%"
+            p="1em"
+            borderRadius="5px"
+          >
+            <Center>
+              <Stack spacing="2em">
+                <Heading fontSize="2xl" color="gray.600">
+                  You have no Saved Accounts!
+                </Heading>
+
+                <Button
+                  bg="yellow.400"
+                  color="white"
+                  _hover={{ bg: "yellow.500" }}
+                  // TODO: add onCLick
+                >
+                  Add Account
+                </Button>
+              </Stack>
+            </Center>
+          </Box>
+        )}
       </Box>
     </>
   );

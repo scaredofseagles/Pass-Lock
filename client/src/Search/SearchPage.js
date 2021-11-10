@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Box, Heading, Center } from "@chakra-ui/react";
-import { useHistory } from "react-router-dom";
-import HeaderBar from "../components/HeaderBar";
 import AccountCard from "../Accounts/AccountCard";
 import queryString from "query-string";
 import { useAccount } from "../Accounts/useAccount";
@@ -9,7 +7,6 @@ import { useAccount } from "../Accounts/useAccount";
 const SearchPage = () => {
   const { accounts, getAccounts } = useAccount();
   const [searchAcct, setSearchAcct] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     const parsed = queryString.parse(window.location.search);

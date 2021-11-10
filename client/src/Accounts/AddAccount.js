@@ -75,7 +75,6 @@ export default function AddAccount({ open, onClose, updateData }) {
 
         let result = await API.sendAcct(newAcct);
         if (result.data.success) {
-          // TODO: disable, spinner, updateData
           updateData();
           setClosing(true);
           setTimeout(() => {

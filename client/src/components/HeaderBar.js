@@ -5,7 +5,8 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem
+  MenuItem,
+  Tooltip
 } from "@chakra-ui/react";
 import useAuth from "../utils/useAuth";
 import { useAccount } from "../Accounts/useAccount";
@@ -43,37 +44,48 @@ export default function HeaderBar() {
     <>
       <Box pt={5} pb={0} bg="gray.800">
         <ul style={{ display: "flex", listStyleType: "none" }}>
-          <IconButton
-            as={Link}
-            variant="link"
-            size="lg"
-            to="/home"
-            icon={<FcLock />}
-          />
+          <Tooltip hasArrow label="Home" bg="gray.700" color="white">
+            <IconButton
+              as={Link}
+              variant="link"
+              size="lg"
+              to="/home"
+              icon={<FcLock />}
+            />
+          </Tooltip>
 
           <div style={{ marginLeft: "auto", marginRight: "auto" }}>
             <SearchBar />
           </div>
           <div style={{ marginLeft: "auto", marginRight: ".5em" }}>
-            <IconButton
-              aria-label="Add Account"
-              onClick={() => setOpenAcct(true)}
-              variant="ghost"
-              isRound={true}
-              color="whitesmoke"
-              _hover={{ backgroundColor: "gray.700" }}
-              icon={<FiPlus />}
-            />
-            <IconButton
-              aria-label="Generate"
-              onClick={() => setOpenGenerate(true)}
-              mr=".7em"
-              variant="ghost"
-              isRound={true}
-              color="whitesmoke"
-              _hover={{ backgroundColor: "gray.700" }}
-              icon={<MdAutorenew />}
-            />
+            <Tooltip hasArrow label="Add Account" bg="gray.700" color="white">
+              <IconButton
+                aria-label="Add Account"
+                onClick={() => setOpenAcct(true)}
+                variant="ghost"
+                isRound={true}
+                color="whitesmoke"
+                _hover={{ backgroundColor: "gray.700" }}
+                icon={<FiPlus />}
+              />
+            </Tooltip>
+            <Tooltip
+              hasArrow
+              label="Generate Password"
+              bg="gray.700"
+              color="white"
+            >
+              <IconButton
+                aria-label="Generate"
+                onClick={() => setOpenGenerate(true)}
+                mr=".7em"
+                variant="ghost"
+                isRound={true}
+                color="whitesmoke"
+                _hover={{ backgroundColor: "gray.700" }}
+                icon={<MdAutorenew />}
+              />
+            </Tooltip>
             <Menu style={{ float: "right" }} bg="gray.700">
               <MenuButton
                 style={{ color: "whitesmoke", padding: ".6em" }}

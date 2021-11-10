@@ -9,25 +9,23 @@ import Login from "./views/Login";
 import ForgotPassword from "./views/ForgotPassword";
 import Landing from "./views/Landing";
 import SearchPage from "./Search/SearchPage";
-import HeaderBar from "./components/HeaderBar";
 
 const App = () => {
   return (
     <ChakraProvider>
-      <Switch>
-        <AcctProvider>
-          <HeaderBar />
+      <AcctProvider>
+        <Switch>
           <PrivateRoute path="/home" component={Dashboard} />
           <PrivateRoute path="/search" component={SearchPage} />
-        </AcctProvider>
 
-        <Route exact path="/" component={Landing} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        <Route path="/forgotpassword" component={ForgotPassword} />
+          <Route exact path="/" component={Landing} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Route path="/forgotpassword" component={ForgotPassword} />
 
-        <Route render={() => <Redirect to={{ pathname: "/" }} />} />
-      </Switch>
+          <Route render={() => <Redirect to={{ pathname: "/" }} />} />
+        </Switch>
+      </AcctProvider>
     </ChakraProvider>
   );
 };
