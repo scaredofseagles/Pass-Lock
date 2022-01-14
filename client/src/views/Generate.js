@@ -42,8 +42,8 @@ export default function Generate({ open, onClose }) {
 
     if (uppercase) finalCharSet += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     if (lowercase) finalCharSet += "abcdefghijklmnopqrstuvwxyz";
-    if (symbols) finalCharSet += "1234567890";
-    if (numbers) finalCharSet += "!@#$%?&*";
+    if (numbers) finalCharSet += "1234567890";
+    if (symbols) finalCharSet += "!@#$%?&*";
 
     let finalPass = "";
 

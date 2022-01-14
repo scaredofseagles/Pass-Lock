@@ -6,7 +6,8 @@ import {
   Stack,
   Center,
   Image,
-  Button
+  Button,
+  ButtonGroup
 } from "@chakra-ui/react";
 import { Link as ReachLink } from "react-router-dom";
 import {
@@ -16,6 +17,8 @@ import {
   addAccount,
   generateAccount
 } from "../assets";
+
+import Footer from "../components/Footer";
 
 export default function Landing() {
   return (
@@ -54,17 +57,29 @@ export default function Landing() {
                 Pass
               </Heading>
               <Heading style={{ fontSize: "62pt" }}>Lock</Heading>
+            </Stack>
+          </div>
+
+          <Center>
+            <ButtonGroup>
               <Button
-                mt="3em"
                 bg="gray.300"
-                _hover={{ bg: "#fca223", color: "white" }}
+                _hover={{ bg: "#fca223" }}
                 as={ReachLink}
                 to="/signup"
               >
                 Try Now
               </Button>
-            </Stack>
-          </div>
+              <Button
+                bg="#fca223"
+                _hover={{ bg: "gray.300" }}
+                as={ReachLink}
+                to="/generate"
+              >
+                Password Generator
+              </Button>
+            </ButtonGroup>
+          </Center>
         </Box>
       </Box>
       <Box bg="gray.300" w="100vw">
@@ -99,23 +114,7 @@ export default function Landing() {
             </Center>
           </Stack>
         </Box>
-        <Box bg="gray.700" mb="auto" py="2em" color="gray.300">
-          <ul style={{ display: "flex", justifyContent: "space-evenly" }}>
-            <li>
-              Copyright ©{" "}
-              <a
-                className="footer"
-                href="https://daileykaze.ca"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Dailey Kaze
-              </a>{" "}
-              | All Rights Reserved
-            </li>
-            <li>Made with 💛 in Toronto</li>
-          </ul>
-        </Box>
+        <Footer />
       </Box>
     </>
   );
